@@ -8,7 +8,10 @@
 #ifndef UTILS_UTILS_H_
 #define UTILS_UTILS_H_
 
-#include "utils/debug/SEGGER_RTT.h"
+
+#include "utils/debug_rtt/SEGGER_RTT.h"
+#include "stdio.h"
+
 
 #define PRINT_DEBUG(...)			printf(__VA_ARGS__)
 
