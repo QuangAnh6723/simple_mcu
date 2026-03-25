@@ -1,0 +1,13 @@
+/*
+ * w5500_port.c
+ *
+ *  Created on: Mar 26, 2026
+ *      Author: AnhLe
+ */
+
+#ifndef DRV_BSP_NETWORK_ETHERNET_W5500_W5500_PORT_C_
+#define DRV_BSP_NETWORK_ETHERNET_W5500_W5500_PORT_C_
+
+
+
+#endif /* DRV_BSP_NETWORK_ETHERNET_W5500_W5500_PORT_C_ */

@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "i2c.h"
+#include "spi.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -59,6 +60,44 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+#define WHO_AM_I_REG	0x0F
+
+void test_spi()
+{
+	PRINT_DEBUG("test spi \r\n");
+
+	uint8_t reg[] = { 0x20 | 0x80, 0xFF};
+	uint8_t recv[2] = {0};
+
+	// read register
+	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
+	HAL_SPI_Transmit(&hspi1, reg, 1, 100);
+	HAL_SPI_Receive(&hspi1, recv, 1, 100);
+	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+
+	PRINT_DEBUG("recv 0x%02X 0x%02X\r\n", recv[0], recv[1]);
+
+	// write new value
+	reg[0] = 0x20;
+	reg[1] = 0x08;
+
+	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
+
+	HAL_SPI_Transmit(&hspi1, reg, 2, 100);
+
+	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+
+	// read register
+	reg[0] = 0x20| 0x80;
+
+	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
+	HAL_SPI_Transmit(&hspi1, reg, 1, 100);
+	HAL_SPI_Receive(&hspi1, recv, 1, 100);
+	HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+
+	PRINT_DEBUG("recv 0x%02X 0x%02X\r\n", recv[0], recv[1]);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -92,9 +131,12 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_I2C1_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
   PRINT_DEBUG("hello nha \r\n");
+
+  test_spi();
 
   /* USER CODE END 2 */
 

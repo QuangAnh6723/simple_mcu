@@ -16,7 +16,6 @@ ringbufError_t rb_init(ringbuffer_t *rb)
 	}
 	rb->head = 0;
 	rb->tail = 0;
-	rb->overflow = 0;
 
 	return RB_OK;
 }
